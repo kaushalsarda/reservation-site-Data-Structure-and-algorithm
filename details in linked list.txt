@@ -1,0 +1,298 @@
+/*MODULE 2. TRAIN DETAILS*/
+
+struct node
+{
+    int train_id;
+    char train_name[100];
+    char source[30];
+    char stop1[30];
+    char stop2[30];
+    char dest[30];
+    int seats;
+    float cost;
+    struct node *link;
+
+};
+
+struct node *root=NULL;
+
+void train_details()
+{
+    display_train_details();
+    main_exit();
+}
+
+//INSERTION OF TRAIN DETAILS INTO A SINGLE LINKED LIST
+void append(int train_id, char *train_name, char source[30], char stop1[30], char stop2[30], char dest[30], int seats, float cost)
+{
+
+	struct node *temp;
+
+	temp=(struct node *)malloc(sizeof(struct node));
+	temp->train_id = train_id;
+	temp->cost   = cost;
+	temp->seats  = seats;
+    strcpy(temp->train_name,train_name);
+    strcpy(temp->source,source);
+    strcpy(temp->stop1,stop1);
+    strcpy(temp->stop2,stop2);
+    strcpy(temp->dest,dest);
+
+	temp->link = NULL;
+
+
+	if(root==NULL)
+    {
+		root = temp;
+	}
+
+	else
+	{
+	    struct node *p;
+        p=root;
+		while(p->link != NULL)
+		{
+			p = p->link;
+		}
+
+		p->link = temp;
+	}
+
+}
+
+
+void add_train()
+{
+    system("cls");
+    int train_id;
+    char name[100];
+    char source[30];
+    char stop1[30];
+    char stop2[30];
+    char destination[30];
+    int seats;
+    float price;
+    char temp;
+
+
+    printf("---------------------STATIONS--------------------\n\n");
+    printf("SNO  CODE     STATION NAME\n\n");
+    printf("1. CSMT     Chhatrapati Shivaji Maharaj Terminus(Mumbai,MAHARASHTRA)\n\n");
+    printf("2. JP       Jaipur Junction railway station (Jaipur,RAJASTHAN)\n\n");
+    printf("3. MAO      Madgaon Junction railway station(Madgaon,GOA)\n\n");
+    printf("4. ADI      Ahmedabad Junction (Ahmedabad,GUJARAT)\n\n");
+    printf("5. PUNE     Pune Junction railway station (Pune, MAHARSHTRA)\n\n");
+    printf("6. CHTS     Cochin Harbour Terminus(Cochin, KERALA)\n\n");
+    printf("7. BNC      Bengaluru Cantonment (Bengaluru, KARNATAKA)\n\n");
+    printf("8. MAS      Puratchi Thalaivar Dr. M.G. Ramachandran Central Railway Station(Chennai, TAMIL NADU)\n\n");
+    printf("9. DEC      Delhi Cantonment railway station(Delhi)\n\n\n");
+
+    train_id: train_id = scanint("\nPlease Enter Train ID: ");
+
+    if(train_id<0)
+    {
+        printf("\nTRAIN ID CANNOT BE NEGATIVE\n");
+        goto train_id;
+    }
+
+    if(train_id>99999)
+    {
+        printf("\nTRAIN ID CANNOT EXCEED FIVE DIGITS\n");
+        goto train_id;
+    }
+
+    struct node *p;
+    p=root;
+
+    while(p!=NULL)
+    {
+        if(train_id==p->train_id)
+        {
+            printf("\nTRAIN ID ALREADY EXISTS\n");
+            getch();
+            goto train_id;
+        }
+        p=p->link;
+    }
+
+    scanf("%c",&temp);
+
+
+    train_name: printf("\nEnter Train Name: ");
+    scanf("%[^\n]", name);
+
+    int i,c;
+    char temp2;
+
+      for (i=0; i<strlen(name); i++)
+        {
+                if(isdigit(name[i]) != 0)
+                {
+                    printf("\nINVALID INPUT\n");
+                    scanf("%c",&temp2);
+                    goto train_name;
+                }
+
+        }
+
+    source: printf("\nEnter source station code: ");
+    scanf("%s",&source);
+
+
+    if(!(strcmp(source,"CSMT")==0||strcmp(source,"JP")==0|| strcmp(source,"MAO")==0||strcmp(source,"ADI")==0||strcmp(source,"PUNE")==0||strcmp(source,"CHTS")==0||strcmp(source,"BNC")==0||strcmp(source,"MAS")==0 ||strcmp(source,"DEC")==0))
+    {
+            printf("\nINVALID CHOICE\n");
+            getch();
+            goto source;
+    }
+
+    stop1: printf("\nEnter stop1 station code: ");
+    scanf("%s",&stop1);
+
+    if(!(strcmp(stop1,"CSMT")==0||strcmp(stop1,"JP")==0|| strcmp(stop1,"MAO")==0||strcmp(stop1,"ADI")==0||strcmp(stop1,"PUNE")==0||strcmp(stop1,"CHTS")==0||strcmp(stop1,"BNC")==0||strcmp(stop1,"MAS")==0 ||strcmp(stop1,"DEC")==0||strcmp(stop1,"NULL")==0))
+    {
+            printf("\nINVALID CHOICE\n");
+            getch();
+            goto stop1;
+    }
+
+    if(strcmp(stop1,source)==0)
+    {
+        printf("\nSTATION ALREADY ENTERED\n");
+        getch();
+        goto stop1;
+    }
+
+    stop2: printf("\nEnter stop2 station code: ");
+    scanf("%s",&stop2);
+
+    if(!(strcmp(stop2,"CSMT")==0||strcmp(stop2,"JP")==0|| strcmp(stop2,"MAO")==0||strcmp(stop2,"ADI")==0||strcmp(stop2,"PUNE")==0||strcmp(stop2,"CHTS")==0||strcmp(stop2,"BNC")==0||strcmp(stop2,"MAS")==0 ||strcmp(stop2,"DEC")==0||strcmp(stop2,"NULL")==0))
+    {
+            printf("\nINVALID CHOICE\n");
+            getch();
+            goto stop2;
+    }
+
+    if(strcmp(stop2,source)==0||strcmp(stop2,stop1)==0)
+    {
+        printf("\nSTATION ALREADY ENTERED\n");
+        getch();
+        goto stop2;
+    }
+
+    destination: printf("\nEnter destination station code: ");
+    scanf("%s",&destination);
+
+    if(!(strcmp(destination,"CSMT")==0||strcmp(destination,"JP")==0|| strcmp(destination,"MAO")==0||strcmp(destination,"ADI")==0||strcmp(destination,"PUNE")==0||strcmp(destination,"CHTS")==0||strcmp(destination,"BNC")==0||strcmp(destination,"MAS")==0 ||strcmp(destination,"DEC")==0))
+    {
+            printf("\nINVALID CHOICE\n");
+            getch();
+            goto destination;
+    }
+
+    if(strcmp(destination,source)==0||strcmp(destination,stop1)==0||strcmp(destination,stop2)==0)
+    {
+        printf("\nSTATION ALREADY ENTERED\n");
+        getch();
+        goto destination;
+    }
+
+    seats: seats = scanint("\nPlease Enter Seats: ");
+
+    if(seats<=0)
+    {
+        printf("\nENTER A POSITIVE INTEGER\n");
+        getch();
+        goto seats;
+    }
+
+     if(seats>2000)
+    {
+        printf("\nSEATS CANNOT EXCEED 2000\n");
+        getch();
+        goto seats;
+    }
+
+    price: price = scanint("\nPlease Enter Ticket Price: ");
+
+
+    if(price<0)
+    {
+        printf("\nPRICE CANNOT BE NEGATIVE\n");
+        getch();
+        goto price;
+    }
+
+
+    if(price==0)
+    {
+        printf("\nPRICE CANNOT BE ZERO\n");
+        getch();
+        goto price;
+    }
+
+     if(price>3000)
+    {
+        printf("\nPRICE CANNOT EXCEED 3000\n");
+        getch();
+        goto price;
+    }
+
+
+    append(train_id,name,source,stop1,stop2,destination, seats, price);
+
+    printf("\n\nTRAIN SUCCESSFULLY ADDED!\n\n");
+
+}
+
+int scanint(const char *const message)
+{
+    int value;
+
+    printf("%s", message);
+    while (scanf("%d", &value) != 1)
+    {
+        int chr;
+        printf("\nINVALID INPUT\n");
+        do {
+            chr = getchar();
+        } while ((chr != EOF) && (chr != '\n'));
+        printf("%s", message);
+    }
+    return value;
+}
+
+void update_seats(int id, int seats)
+{
+        struct node *p;
+        p=root;
+		while(p!= NULL)
+		{
+		    if(id==p->train_id)
+		    {
+                 p->seats=p->seats-seats;
+		    }
+			p = p->link;
+		}
+
+}
+
+void display_train_details()
+{
+    printf("\n--------------------------------------------------TRAIN DETAILS-------------------------------------------------------\n\n");
+    printf("ID      TRAIN NAME                      SOURCE  DEST   SEATS    PRICE\n\n");
+    struct node *p;
+    p=root;
+
+    while(p!=NULL)
+    {
+        printf("%d\t",p->train_id);
+        printf("%s\t\t",p->train_name);
+        printf("%s\t",p->source);
+        printf("%s\t",p->dest);
+        printf("%d\t",p->seats);
+        printf("%.2f\t",p->cost);
+        printf("\n");
+        p=p->link;
+    }
+}

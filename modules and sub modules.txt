@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<windows.h>
+
+//MAIN MODULES
+void admin();
+void train_details();
+void reservation();
+void cancellation();
+void extra_services();
+void billing();
+
+
+//SUB MODULES
+void menu();
+void append(int serial, char train_name[100], char source[30], char stop1[30], char stop2[30], char dest[30], int seats, float cost );
+void append(int sno, char item[50], float rate);
+void insert_elements();
+void display_train_details();
+void add_train();
+int scanint(const char *const message);
+void update_seats();
+void update_cancelled_seats(int id);
+void display_food_menu();
+void get_trains(char from[14], char to[14]);
+void details(int num_train, int num_seats);
+struct person *hash_table_lookup(int pnr);
+struct person *hash_table_cancel(int pnr);
+float total(int choice, int quantity);
+void add_total(int pnr, float subtotal);
+void get_details(int train_num, char from[14], char to[14]);
+void print_table();
+void  main_exit();
+int hash(int p);
+
+
+int main()
+{
+system("color 9");
+insert_elements();// update data of all modules
+printf("\n\t\t\t\t\t\t\t---------- RAILWAY RESERVATION SYSTEM -------\n\n");
+printf("\n\t\t\t\t\t\t\t\t\tBROUGHT TO YOU BY :\n\n");
+
+
+printf("\n\n\n\t\t\t\t\t\t\t                PRESS ENTER TO CONTINUE                   \n");
+getch();
+menu();
+return 0;
+}

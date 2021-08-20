@@ -1,0 +1,77 @@
+//DISPLAY FOOD MENU
+void display_food_menu()
+{
+    struct food *q;
+    q=root_food;
+
+    while(q!=NULL)
+    {
+        printf("%d\t",q->serial_no);
+        printf("%s\t",q->name);
+        printf("%.2f\t",q->price);
+        printf("\n");
+        q=q->link;
+    }
+}
+
+//INSERTION OF FOOD ITEMS INTO A SINGLE LINKED LIST
+void append(int sno, char item[50], float rate)
+{
+
+	struct food *temp;
+
+	temp=(struct food *)malloc(sizeof(struct food));
+	temp->serial_no = sno;
+	temp->price = rate;
+    strcpy(temp->name,item);
+
+	temp->link = NULL;
+
+
+	if(root_food==NULL)
+    {
+		root_food= temp;
+	}
+
+	else
+	{
+	    struct food *p;
+        p=root_food;
+		while(p->link != NULL)
+		{
+			p = p->link;
+		}
+
+		p->link = temp;
+	}
+
+}
+
+//CALCULATE COST OF FOOD ITEMS
+float total(int choice , int quantity)
+{
+    float bill=0;
+    struct food *p;
+    p=root_food;
+    int ch=choice;
+    int qty=quantity;
+
+    while(p!=NULL)
+    {
+        if(ch==p->serial_no)
+        {
+            bill=bill+p->price*qty;
+        }
+        p=p->link;
+    }
+    return bill;
+}
+
+//ADD COST OF FOOD ITEMS TO BILL
+void add_total(int pnr, float subtotal)
+{
+
+    printf("\n\nSUBTOTAL ADDED TO MAIN BILL\n\n");
+    struct person *temp=hash_table_lookup(pnr);
+    temp->bill=temp->bill+subtotal;
+}

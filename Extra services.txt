@@ -1,0 +1,98 @@
+/*MODULE 5 EXTRA SERVICES*/
+
+
+int choice, quantity;
+
+struct food
+{
+    int serial_no;
+    char name[50];
+    float price;
+    struct food *link;
+
+};
+
+struct food *root_food=NULL;
+
+void extra_services()
+{
+    char ch[1];
+    int pnr;
+
+
+    new_order: printf("\n----------------Today's Menu-----------------\n\n");
+
+    printf("SNO     ITEM                            PRICE\n\n");
+
+    display_food_menu();
+
+    pnr = scanint("\nENTER PNR NUMBER: ");
+
+    struct person *p=hash_table_lookup(pnr);
+
+    if(p==NULL)
+    {
+        printf("\nINVALID PNR NUMBER");
+        getch();
+        main_exit();
+    }
+
+    else
+    {
+        choice: choice = scanint("\nSelect your choice: ");
+
+        struct food *p;
+        p=root_food;
+        int count;
+
+        while(p!=NULL)
+        {
+            if(p->serial_no==choice)
+            {
+                count=1;
+            }
+            p=p->link;
+        }
+
+        if(count!=1)
+        {
+            printf("\nINVALID CHOICE\n");
+            goto choice;
+        }
+
+        quantity: quantity = scanint("\nEnter Quantity: ");
+
+        if(quantity<=0)
+        {
+            printf("\nINVALID QUANTITY\n");
+            goto quantity;
+        }
+
+        if(quantity>3)
+        {
+            printf("\nQUANTITY CANNOT EXCEED 3\n");
+            goto quantity;
+        }
+
+        printf("\nOrder Placed Successfully!!\n");
+
+
+        printf("\nCurrent Subtotal: %.2f",total(choice, quantity));
+
+        add_total(pnr,total(choice, quantity)); // Add cost to final bill
+
+        printf("\nWant Anything else? 'Y'/'N'\n");
+        scanf("%s",&ch);
+
+        if(strcmp(ch,"Y")==0)
+        {
+        system("cls");
+        goto new_order;
+        }
+
+        else
+        {
+        main_exit();
+        }
+    }
+}
